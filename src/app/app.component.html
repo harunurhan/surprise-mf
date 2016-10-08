@@ -1,0 +1,11 @@
+<h1>
+  {{title}}
+</h1>
+<div [ngSwitch]="events.length === 0">
+  <div *ngSwitchCase="true">
+    <surprise-form></surprise-form>
+  </div>
+  <div *ngSwitchDefault>
+    <event-timeline [events]="events"></event-timeline>
+  </div>
+</div>

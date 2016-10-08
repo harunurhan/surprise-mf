@@ -1,0 +1,1 @@
+export { SurpriseFormComponent } from './surprise-form.component';

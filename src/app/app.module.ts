@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material'
+import { Ng2BootstrapModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { AppComponent } from './app.component';
 import { SurpriseFormComponent } from './surprise-form';
@@ -20,7 +20,7 @@ import { SHARED_SERVICES } from './shared';
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot()
+    Ng2BootstrapModule
   ],
   providers: SHARED_SERVICES,
   bootstrap: [AppComponent]

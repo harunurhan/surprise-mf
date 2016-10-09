@@ -1,46 +1,53 @@
-<div class="app-content">
-  <md-card class="app-input-section">
-    <md-grid-list cols="3">
-      <md-grid-tile>
-        <md-list>
-          <md-list-item>
-            <md-input [(ngModel)]="data.fromLocation" placeholder="From"></md-input>
-          </md-list-item>
-          <md-list-item>
-            <md-input [(ngModel)]="data.fromDate" placeholder="When"></md-input>
-          </md-list-item>
-        </md-list>
-      </md-grid-tile>
-      <md-grid-tile>
-        <md-list>
-          <md-list-item>
-            <md-input [(ngModel)]="newCity.name" placeholder="City"></md-input>
-            <button md-button (click)="addNewCity()">+</button>
-          </md-list-item>
-          <md-divider></md-divider>
-          <h3 md-subheader>Cities</h3>
-          <md-list-item>
-            <md-list>
-              <md-list-item *ngFor="let city of data.cities">
+<div class="container">
+  <div [ngSwitch]="isWaitingForSurprise">
+    <div *ngSwitchCase="true">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    </div>
+    <div *ngSwitchDefault>
+      <div class="row padding-top fix-size">
+        <div class="col-md-4">
+          <div class="form-group">
+            <input class="form-control" [(ngModel)]="data.startCity" placeholder="From">
+          </div>
+          <div class="form-group">
+            <input class="form-control" [(ngModel)]="data.startDate" placeholder="Departure Date">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="newCity.name" placeholder="City you 💖">
+              <span class="input-group-btn">
+            <button class="btn btn-primary" (click)="addNewCity()" [disabled]="!newCity.name || newCity.name.length === 0">+</button>
+          </span>
+            </div>
+            <ul class="list-group padding-top">
+              <li *ngFor="let city of data.cities; let i = index" class="list-group-item">
                 {{city}}
-              </md-list-item>
-            </md-list>
-          </md-list-item>
-        </md-list>
-      </md-grid-tile>
-      <md-grid-tile>
-        <md-list>
-          <md-list-item>
-            <md-input [(ngModel)]="data.toLocation" placeholder="To"></md-input>
-          </md-list-item>
-          <md-list-item>
-            <md-input [(ngModel)]="data.toDate" placeholder="When"></md-input>
-          </md-list-item>
-        </md-list>
-      </md-grid-tile>
-    </md-grid-list>
-  </md-card>
-  <md-card>
-    <button md-button (click)="surprise()">Surprise</button>
-  </md-card>
+                <button type="button" class="close" aria-label="Close" (click)="removeCityAt(i)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input class="form-control" [(ngModel)]="data.endCity" placeholder="To">
+          </div>
+          <div class="form-group">
+            <input class="form-control" [(ngModel)]="data.endDate" placeholder="Arrival Date">
+          </div>
+        </div>
+      </div>
+      <div class="row padding-top">
+        <div class=float-right>
+          <button class="btn btn-primary" (click)="surprise()">Surprise</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

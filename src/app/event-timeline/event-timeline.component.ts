@@ -62,4 +62,5 @@ interface Event {
   description: string;
   detailsLink: string;
   type: string;
+  price: string;
 }

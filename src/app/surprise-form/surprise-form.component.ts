@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 import { ApiService } from '../shared';
 
@@ -10,31 +10,45 @@ import { ApiService } from '../shared';
 export class SurpriseFormComponent {
   data: Data = {
     cities: [],
-    fromDate: null,
-    toDate: null,
-    fromCity: null,
-    toCity: null
+    startDate: null,
+    endDate: null,
+    startCity: null,
+    endCity: null
   };
   newCity: NewCity = { name: null };
 
-  constructor(private apiService: ApiService) {}
+  @Output() onSurpriseReceived: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onWaitForSurprise: EventEmitter<any> = new EventEmitter<any>();
+
+  isWaitingForSurprise: boolean = false;
+
+  constructor(private apiService: ApiService) { }
 
   addNewCity() {
     this.data.cities.push(this.newCity.name);
     this.newCity.name = null;
   }
 
+  removeCityAt(index: number) {
+    this.data.cities.splice(index, 1);
+  }
+
   surprise() {
-    this.apiService.post('surprise', this.data);
+    this.isWaitingForSurprise = true;
+    this.apiService.post('surprise', this.data)
+      .subscribe(events => {
+        this.isWaitingForSurprise = false;
+        this.onSurpriseReceived.emit(events);
+      });
   }
 }
 
 interface Data {
   cities: Array<string>;
-  fromDate: string;
-  toDate: string;
-  fromCity: string;
-  toCity: string;
+  startDate: string;
+  endDate: string;
+  startCity: string;
+  endCity: string;
 }
 
 interface NewCity {

@@ -1,4 +1,4 @@
-<img src="./assets/img/logo.jpg" class="img-circle center-block padding" alt="Surprise MF?">
+<img id="logo" src="./assets/img/logo.jpg" class="img-circle center-block padding" alt="Surprise MF?">
 <div [ngSwitch]="events.length === 0">
   <div *ngSwitchCase="true">
     <surprise-form (onSurpriseReceived)="setEvents($event)"></surprise-form>

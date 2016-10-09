@@ -13,14 +13,15 @@ export class EventTimelineComponent implements AfterViewInit {
 
   private timelineBlocks: Array<HTMLElement>;
   private offset: number = 0.7;
-  private el: HTMLElement;
+  private imageHeight: number;
 
   constructor(private elementRef: ElementRef, private domUtil: DomUtilService) { }
 
   ngAfterViewInit() {
-    this.el = this.elementRef.nativeElement.querySelector('section');
+    this.imageHeight = document.getElementById('logo').offsetHeight;
+    let el = this.elementRef.nativeElement.querySelector('section');
     this.timelineBlocks = Array.prototype
-      .slice.call(this.el.querySelectorAll('.cd-timeline-block'));
+      .slice.call(el.querySelectorAll('.cd-timeline-block'));
 
     this.hideTimelineBlocks();
 
@@ -33,7 +34,7 @@ export class EventTimelineComponent implements AfterViewInit {
 
   hideTimelineBlocks() {
     this.timelineBlocks
-      .filter(block => block.offsetTop > window.scrollY + window.innerHeight * this.offset)
+      .filter(block => block.offsetTop + this.imageHeight > window.scrollY + window.innerHeight * this.offset)
       .map(block => Array.prototype.slice.call(
         block.querySelectorAll('.cd-timeline-img, .cd-timeline-content')))
       .reduce((pre: Array<HTMLElement>, cur: Array<HTMLElement>) => cur.concat(pre), [])
@@ -44,7 +45,7 @@ export class EventTimelineComponent implements AfterViewInit {
 
   showTimelineBlocks() {
     this.timelineBlocks
-      .filter(block => block.offsetTop <= window.scrollY + window.innerHeight * this.offset)
+      .filter(block => block.offsetTop + this.imageHeight <= window.scrollY + window.innerHeight * this.offset)
       .map(block => Array.prototype.slice.call(
         block.querySelectorAll('.cd-timeline-img.is-hidden, .cd-timeline-content.is-hidden')))
       .reduce((pre: Array<HTMLElement>, cur: Array<HTMLElement>) => cur.concat(pre), [])
